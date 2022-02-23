@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>eu.solutions.a2.iso20022.si</groupId>
+	<artifactId>si-sepa-iso20022</artifactId>
+	<version>0.1.0</version>
+
+	<name>si-sepa-iso20022</name>
+	<url>http://a2-solutions.eu</url>
+	<description>
+		pain.001.001.03 and camt.053.001.02 conversion utilities
+	</description>
+	<organization>
+		<name>A2 Rešitve, d.o.o.</name>
+		<url>http://a2-solutions.eu/</url>
+	</organization>
+	<issueManagement>
+		<url>https://github.com/averemee-si/si-sepa-iso20022/issues</url>
+		<system>GitHub</system>
+	</issueManagement>
+
+	<licenses>
+		<license>
+			<name>Apache License</name>
+			<url>http://a2-solutions.eu/licenses/apache/LICENSE.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<lanterna.version>3.1.1</lanterna.version>
+		<slf4j.version>1.7.32</slf4j.version>
+		<junit.version>4.11</junit.version>
+	</properties>
+
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.googlecode.lanterna/lanterna -->
+		<dependency>
+			<groupId>com.googlecode.lanterna</groupId>
+			<artifactId>lanterna</artifactId>
+			<version>${lanterna.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12/ -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+          				</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/assembly/standalone.xml</descriptor>
+					</descriptors>
+					<archive>
+						<manifest>
+							<mainClass>eu.solutions.a2.iso20022.si.revolut.SepaUtils</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+ 	</build>
+</project>
