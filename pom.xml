@@ -33,17 +33,49 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<jaxb.generated>${project.build.directory}/generated-sources/jaxb</jaxb.generated>
 		<lanterna.version>3.1.1</lanterna.version>
 		<slf4j.version>1.7.32</slf4j.version>
+		<xmlbind.version>2.3.3</xmlbind.version>
+		<commons.lang3.version>3.12.0</commons.lang3.version>
+		<commons.csv.version>1.9.0</commons.csv.version>
 		<junit.version>4.11</junit.version>
 	</properties>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api -->
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>${xmlbind.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl -->
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>${xmlbind.version}</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.googlecode.lanterna/lanterna -->
 		<dependency>
 			<groupId>com.googlecode.lanterna</groupId>
 			<artifactId>lanterna</artifactId>
 			<version>${lanterna.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3/ -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons.lang3.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
+		<dependency>
+ 			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>${commons.csv.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12/ -->
@@ -63,41 +95,94 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
+  			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>2.5.0</version>
 				<executions>
 					<execution>
-						<phase>install</phase>
+						<id>xjc-camt053-001-02</id>
+							<phase>generate-sources</phase>
 						<goals>
-							<goal>copy-dependencies</goal>
-          				</goals>
+							<goal>xjc</goal>
+						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<packageName>eu.solutions.a2.iso20022.camt053.v001_02</packageName>
+							<sources>
+								<source>src/main/resources/xsd/camt.053.001.02.xsd</source>
+							</sources>
+							<clearOutputDir>false</clearOutputDir>
+						</configuration>
+					</execution>
+					<execution>
+						<id>xjc-pain001-001-03</id>
+							<phase>generate-sources</phase>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<packageName>eu.solutions.a2.iso20022.pain001.v001_03</packageName>
+							<sources>
+								<source>src/main/resources/xsd/pain.001.001.03.xsd</source>
+							</sources>
+							<clearOutputDir>false</clearOutputDir>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptors>
-						<descriptor>src/assembly/standalone.xml</descriptor>
-					</descriptors>
-					<archive>
-						<manifest>
-							<mainClass>eu.solutions.a2.iso20022.si.revolut.SepaUtils</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>add-source</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>add-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>${jaxb.generated}</source>
+								</sources>
+							</configuration>
+						</execution>
+    				</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<executions>
+						<execution>
+							<phase>install</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+          					</goals>
+							<configuration>
+								<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<configuration>
+						<descriptors>
+							<descriptor>src/assembly/standalone.xml</descriptor>
+						</descriptors>
+						<archive>
+							<manifest>
+								<mainClass>eu.solutions.a2.iso20022.si.revolut.SepaUtils</mainClass>
+							</manifest>
+						</archive>
+					</configuration>
+					<executions>
+						<execution>
+							<id>make-assembly</id>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
+						</execution>
+					</executions>
 			</plugin>
 		</plugins>
  	</build>
