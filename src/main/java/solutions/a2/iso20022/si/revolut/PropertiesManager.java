@@ -35,8 +35,15 @@ public class PropertiesManager {
 	private static final String PROPERTY_PARTY = "PARTY";
 	private static final String PROPERTY_ADDR_LINE_1 = "ADDR_LINE_1";
 	private static final String PROPERTY_ADDR_LINE_2 = "ADDR_LINE_2";
-	private static final String PERSONAL_IBANS = "PERSONAL_IBANS";	
-	
+	private static final String PERSONAL_IBANS = "PERSONAL_IBANS";
+
+	public static String CURRENCY_CODE = "EUR";
+	public static String PARTY_COUNTRY = "SI";
+	public static String BRANCH_COUNTRY = "LT";
+	public static String BIC = "REVOLT21";
+	public static String BRANCH = "Revolut Payments UAB";
+	public static String TZ = "Europe/Ljubljana";
+
 	private final String fileName;
 	private final Properties props;
 	private File propsFile;
@@ -114,23 +121,23 @@ public class PropertiesManager {
 	}
 
 	public String tz() {
-		return "Europe/Ljubljana";
+		return TZ;
 	}
 
 	public String currency() {
-		return "EUR";
+		return CURRENCY_CODE;
 	}
 
 	public String bic() {
-		return "REVOLT21";
+		return BIC;
 	}
 
 	public String branch() {
-		return "Revolut Payments UAB";
+		return BRANCH;
 	}
 
 	public String branchCountry() {
-		return "LT";
+		return BRANCH_COUNTRY;
 	}
 
 	public String iban() {
@@ -142,7 +149,7 @@ public class PropertiesManager {
 	}
 
 	public String partyCountry() {
-		return "SI";
+		return PARTY_COUNTRY;
 	}
 
 	public String addressLine1() {
