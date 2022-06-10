@@ -31,12 +31,12 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 		<jaxb.generated>${project.build.directory}/generated-sources/jaxb</jaxb.generated>
 		<lanterna.version>3.1.1</lanterna.version>
 		<slf4j.version>1.7.32</slf4j.version>
-		<xmlbind.version>3.0.1</xmlbind.version>
+		<xmlbind.version>4.0.0</xmlbind.version>
 		<commons.lang3.version>3.12.0</commons.lang3.version>
 		<commons.csv.version>1.9.0</commons.csv.version>
 		<commons.cli.version>1.4</commons.cli.version>
