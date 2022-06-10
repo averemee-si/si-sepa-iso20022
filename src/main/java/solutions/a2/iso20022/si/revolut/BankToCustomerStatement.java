@@ -443,4 +443,85 @@ public class BankToCustomerStatement {
 		}
 	}
 
+	public static void main(String[] argv) {
+		// Check for valid log4j configuration
+		final String log4jConfig = System.getProperty("a2.log4j.configuration");
+		if (log4jConfig == null || "".equals(log4jConfig)) {
+			BasicConfigurator.configure();
+			LOGGER.warn("JVM argument -Da2.log4j.configuration not set!");
+		} else {
+			// Check that log4j configuration file exist
+			Path path = Paths.get(log4jConfig);
+			if (!Files.exists(path) || Files.isDirectory(path)) {
+				BasicConfigurator.configure();
+				LOGGER.error("JVM argument -Da2.log4j.configuration points to unknown file {}.", log4jConfig);
+			} else {
+				// Initialize log4j
+				PropertyConfigurator.configure(log4jConfig);
+			}
+		}
+
+		final Options options = new Options();
+
+		final Option optionFileName = new Option("s", "revolut-statement", true,
+				"Full path to Revolut statement in csv format.");
+		optionFileName.setRequired(true);
+		options.addOption(optionFileName);
+
+		final Option optionPartyAddress = new Option("a", "party-address", true,
+				"Full path to Revolut statement in csv format.");
+		optionPartyAddress.setRequired(true);
+		options.addOption(optionPartyAddress);
+
+		final Option optionPartyName = new Option("n", "party-name", true,
+				"Party name");
+		optionPartyName.setRequired(true);
+		options.addOption(optionPartyName);
+
+		final Option optionIban = new Option("i", "iban", true,
+				"IBAN");
+		optionIban.setRequired(true);
+		options.addOption(optionIban);
+
+		CommandLineParser parser = new DefaultParser();
+		HelpFormatter formatter = new HelpFormatter();
+		CommandLine cmd = null;
+		try {
+			cmd = parser.parse(options, argv);
+		} catch (org.apache.commons.cli.ParseException pe) {
+			LOGGER.error(pe.getMessage());
+			formatter.printHelp(BankToCustomerStatement.class.getCanonicalName(), options);
+			System.exit(1);
+		}
+
+		final String fileName = cmd.getOptionValue("s");
+		final String partyAddress = cmd.getOptionValue("a");
+		final String partyName = cmd.getOptionValue("n");
+		final String iban = cmd.getOptionValue("i");
+
+		try {
+			BankToCustomerStatement revolut = new BankToCustomerStatement(
+					PropertiesManager.TZ,
+					PropertiesManager.CURRENCY_CODE,
+					fileName);
+			revolut.write(
+					PropertiesManager.PARTY_COUNTRY,
+					partyAddress,
+					"",
+					partyName,
+					PropertiesManager.BRANCH_COUNTRY,
+					PropertiesManager.BIC,
+					PropertiesManager.BRANCH,
+					iban,
+					SepaUtils.getOutputName(fileName, false));
+		} catch (IOException e) {
+			LOGGER.error(e.getMessage());
+			final StringWriter sw = new StringWriter();
+			final PrintWriter pw = new PrintWriter(sw);
+			e.printStackTrace(pw);
+			LOGGER.error(sw.toString());
+		}
+
+	}
+
 }

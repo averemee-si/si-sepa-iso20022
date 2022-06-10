@@ -5,7 +5,7 @@
 
 	<groupId>solutions.a2.iso20022.si</groupId>
 	<artifactId>si-sepa-iso20022</artifactId>
-	<version>0.1.0</version>
+	<version>1.0.0</version>
 
 	<name>si-sepa-iso20022</name>
 	<url>https://a2-solutions.eu</url>

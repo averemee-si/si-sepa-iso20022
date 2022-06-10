@@ -16,6 +16,12 @@ package solutions.a2.iso20022.si.revolut;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,9 +33,19 @@ import jakarta.xml.bind.Unmarshaller;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import solutions.a2.iso20022.pain001.v001_03.CreditTransferTransactionInformation10;
 import solutions.a2.iso20022.pain001.v001_03.CustomerCreditTransferInitiationV03;
@@ -38,6 +54,8 @@ import solutions.a2.iso20022.pain001.v001_03.PaymentInstructionInformation3;
 import solutions.a2.iso20022.pain001.v001_03.StructuredRemittanceInformation7;
 
 public class CreditTransferInitiation {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(CreditTransferInitiation.class);
 
 	private final CustomerCreditTransferInitiationV03 ccti;
 
@@ -96,5 +114,60 @@ public class CreditTransferInitiation {
 		printer.close();
 		fileWriter.close();
 	}
-	
+
+	public static void main(String[] argv) {
+		// Check for valid log4j configuration
+		final String log4jConfig = System.getProperty("a2.log4j.configuration");
+		if (log4jConfig == null || "".equals(log4jConfig)) {
+			BasicConfigurator.configure();
+			LOGGER.warn("JVM argument -Da2.log4j.configuration not set!");
+		} else {
+			// Check that log4j configuration file exist
+			Path path = Paths.get(log4jConfig);
+			if (!Files.exists(path) || Files.isDirectory(path)) {
+				BasicConfigurator.configure();
+				LOGGER.error("JVM argument -Da2.log4j.configuration points to unknown file {}.", log4jConfig);
+			} else {
+				// Initialize log4j
+				PropertyConfigurator.configure(log4jConfig);
+			}
+		}
+
+		final Options options = new Options();
+
+		final Option optionFileName = new Option("s", "source-file", true,
+				"Full path to source file with payment instructions in xml format.");
+		optionFileName.setRequired(true);
+		options.addOption(optionFileName);
+
+		final Option optionIban = new Option("i", "personal-ibans", true,
+				"Comma separated list of IBAN's");
+		optionIban.setRequired(true);
+		options.addOption(optionIban);
+
+		CommandLineParser parser = new DefaultParser();
+		HelpFormatter formatter = new HelpFormatter();
+		CommandLine cmd = null;
+		try {
+			cmd = parser.parse(options, argv);
+		} catch (org.apache.commons.cli.ParseException pe) {
+			LOGGER.error(pe.getMessage());
+			formatter.printHelp(CreditTransferInitiation.class.getCanonicalName(), options);
+			System.exit(1);
+		}
+
+		final String fileName = cmd.getOptionValue("s");
+		final List<String> personalIbans = Arrays.asList(cmd.getOptionValue("i").split(","));
+
+		try {
+			CreditTransferInitiation cti = new CreditTransferInitiation(fileName);
+			cti.write(SepaUtils.getOutputName(fileName, true), personalIbans);
+		} catch (IOException | JAXBException e) {
+			LOGGER.error(e.getMessage());
+			final StringWriter sw = new StringWriter();
+			final PrintWriter pw = new PrintWriter(sw);
+			e.printStackTrace(pw);
+			LOGGER.error(sw.toString());
+		}
+	}
 }
