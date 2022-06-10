@@ -233,15 +233,7 @@ public class SepaUtils {
 			if (choosen != null) {
 				lblInput.setText(choosen.getCanonicalPath());
 				if (StringUtils.isNotBlank(lblInput.getText())) {
-					final int lastDot = StringUtils.lastIndexOf(lblInput.getText(), ".");
-					final String outputName;
-					if (lastDot < 0 || lastDot >= lblInput.getText().length()) {
-						outputName = lblInput.getText() + (runMode ? ".csv" : ".xml");
-					} else {
-						outputName = StringUtils.substring(lblInput.getText(), 0, lastDot) + 
-								(runMode ? ".csv" : ".xml");
-					}
-					lblOutput.setText(outputName);
+					lblOutput.setText(getOutputName(lblInput.getText(), runMode));
 				}
 			}
 		} catch (IOException ioe) {
@@ -387,6 +379,15 @@ public class SepaUtils {
 		panelRun.setVisible(true);
 		window.setComponent(null);
 		window.setComponent(panelRun);
+	}
+
+	public static String getOutputName(final String sourceFile, final boolean isCsv) {
+		final int lastDot = StringUtils.lastIndexOf(sourceFile, ".");
+		if (lastDot < 0 || lastDot >= sourceFile.length()) {
+			return sourceFile + (isCsv ? ".csv" : ".xml");
+		} else {
+			return StringUtils.substring(sourceFile, 0, lastDot) + (isCsv ? ".csv" : ".xml");
+		}
 	}
 
 	public static void main(String[] args) {
