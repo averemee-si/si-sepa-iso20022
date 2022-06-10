@@ -36,11 +36,12 @@
 		<jaxb.generated>${project.build.directory}/generated-sources/jaxb</jaxb.generated>
 		<lanterna.version>3.1.1</lanterna.version>
 		<slf4j.version>1.7.32</slf4j.version>
-		<xmlbind.version>2.3.3</xmlbind.version>
+		<xmlbind.version>3.0.1</xmlbind.version>
 		<commons.lang3.version>3.12.0</commons.lang3.version>
 		<commons.csv.version>1.9.0</commons.csv.version>
 		<commons.cli.version>1.4</commons.cli.version>
 		<junit.version>4.11</junit.version>
+		<jaxb2.plugin.version>3.1.0</jaxb2.plugin.version>
 	</properties>
 
 	<dependencies>
@@ -106,7 +107,7 @@
   			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxb2-maven-plugin</artifactId>
-				<version>2.5.0</version>
+				<version>${jaxb2.plugin.version}</version>
 				<executions>
 					<execution>
 						<id>xjc-camt053-001-02</id>

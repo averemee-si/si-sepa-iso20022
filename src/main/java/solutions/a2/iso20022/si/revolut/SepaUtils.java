@@ -20,7 +20,6 @@ import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.PropertyConfigurator;
@@ -48,6 +47,8 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+
+import jakarta.xml.bind.JAXBException;
 
 public class SepaUtils {
 
