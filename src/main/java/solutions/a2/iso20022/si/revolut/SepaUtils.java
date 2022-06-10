@@ -11,7 +11,7 @@
  * the License for the specific language governing permissions and limitations under the License.
  */
 
-package eu.solutions.a2.iso20022.si.revolut;
+package solutions.a2.iso20022.si.revolut;
 
 import java.io.File;
 import java.io.IOException;

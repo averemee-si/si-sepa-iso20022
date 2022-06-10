@@ -11,7 +11,7 @@
  * the License for the specific language governing permissions and limitations under the License.
  */
 
-package eu.solutions.a2.iso20022.si.revolut;
+package solutions.a2.iso20022.si.revolut;
 
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -43,34 +43,34 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.StringUtils;
 
-import eu.solutions.a2.iso20022.camt053.v001_02.AccountIdentification4Choice;
-import eu.solutions.a2.iso20022.camt053.v001_02.AccountStatement2;
-import eu.solutions.a2.iso20022.camt053.v001_02.ActiveOrHistoricCurrencyAndAmount;
-import eu.solutions.a2.iso20022.camt053.v001_02.BalanceType5Choice;
-import eu.solutions.a2.iso20022.camt053.v001_02.BalanceType12;
-import eu.solutions.a2.iso20022.camt053.v001_02.BalanceType12Code;
-import eu.solutions.a2.iso20022.camt053.v001_02.BankToCustomerStatementV02;
-import eu.solutions.a2.iso20022.camt053.v001_02.BankTransactionCodeStructure4;
-import eu.solutions.a2.iso20022.camt053.v001_02.BranchAndFinancialInstitutionIdentification4;
-import eu.solutions.a2.iso20022.camt053.v001_02.CashAccount20;
-import eu.solutions.a2.iso20022.camt053.v001_02.CashBalance3;
-import eu.solutions.a2.iso20022.camt053.v001_02.CreditDebitCode;
-import eu.solutions.a2.iso20022.camt053.v001_02.DateAndDateTimeChoice;
-import eu.solutions.a2.iso20022.camt053.v001_02.Document;
-import eu.solutions.a2.iso20022.camt053.v001_02.EntryDetails1;
-import eu.solutions.a2.iso20022.camt053.v001_02.EntryStatus2Code;
-import eu.solutions.a2.iso20022.camt053.v001_02.EntryTransaction2;
-import eu.solutions.a2.iso20022.camt053.v001_02.FinancialInstitutionIdentification7;
-import eu.solutions.a2.iso20022.camt053.v001_02.GroupHeader42;
-import eu.solutions.a2.iso20022.camt053.v001_02.NumberAndSumOfTransactions1;
-import eu.solutions.a2.iso20022.camt053.v001_02.ObjectFactory;
-import eu.solutions.a2.iso20022.camt053.v001_02.PartyIdentification32;
-import eu.solutions.a2.iso20022.camt053.v001_02.PostalAddress6;
-import eu.solutions.a2.iso20022.camt053.v001_02.ProprietaryBankTransactionCodeStructure1;
-import eu.solutions.a2.iso20022.camt053.v001_02.RemittanceInformation5;
-import eu.solutions.a2.iso20022.camt053.v001_02.ReportEntry2;
-import eu.solutions.a2.iso20022.camt053.v001_02.TotalTransactions2;
-import eu.solutions.a2.iso20022.camt053.v001_02.TransactionReferences2;
+import solutions.a2.iso20022.camt053.v001_02.AccountIdentification4Choice;
+import solutions.a2.iso20022.camt053.v001_02.AccountStatement2;
+import solutions.a2.iso20022.camt053.v001_02.ActiveOrHistoricCurrencyAndAmount;
+import solutions.a2.iso20022.camt053.v001_02.BalanceType5Choice;
+import solutions.a2.iso20022.camt053.v001_02.BalanceType12;
+import solutions.a2.iso20022.camt053.v001_02.BalanceType12Code;
+import solutions.a2.iso20022.camt053.v001_02.BankToCustomerStatementV02;
+import solutions.a2.iso20022.camt053.v001_02.BankTransactionCodeStructure4;
+import solutions.a2.iso20022.camt053.v001_02.BranchAndFinancialInstitutionIdentification4;
+import solutions.a2.iso20022.camt053.v001_02.CashAccount20;
+import solutions.a2.iso20022.camt053.v001_02.CashBalance3;
+import solutions.a2.iso20022.camt053.v001_02.CreditDebitCode;
+import solutions.a2.iso20022.camt053.v001_02.DateAndDateTimeChoice;
+import solutions.a2.iso20022.camt053.v001_02.Document;
+import solutions.a2.iso20022.camt053.v001_02.EntryDetails1;
+import solutions.a2.iso20022.camt053.v001_02.EntryStatus2Code;
+import solutions.a2.iso20022.camt053.v001_02.EntryTransaction2;
+import solutions.a2.iso20022.camt053.v001_02.FinancialInstitutionIdentification7;
+import solutions.a2.iso20022.camt053.v001_02.GroupHeader42;
+import solutions.a2.iso20022.camt053.v001_02.NumberAndSumOfTransactions1;
+import solutions.a2.iso20022.camt053.v001_02.ObjectFactory;
+import solutions.a2.iso20022.camt053.v001_02.PartyIdentification32;
+import solutions.a2.iso20022.camt053.v001_02.PostalAddress6;
+import solutions.a2.iso20022.camt053.v001_02.ProprietaryBankTransactionCodeStructure1;
+import solutions.a2.iso20022.camt053.v001_02.RemittanceInformation5;
+import solutions.a2.iso20022.camt053.v001_02.ReportEntry2;
+import solutions.a2.iso20022.camt053.v001_02.TotalTransactions2;
+import solutions.a2.iso20022.camt053.v001_02.TransactionReferences2;
 
 
 public class BankToCustomerStatement {

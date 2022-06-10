@@ -3,18 +3,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>eu.solutions.a2.iso20022.si</groupId>
+	<groupId>solutions.a2.iso20022.si</groupId>
 	<artifactId>si-sepa-iso20022</artifactId>
 	<version>0.1.0</version>
 
 	<name>si-sepa-iso20022</name>
-	<url>http://a2-solutions.eu</url>
+	<url>https://a2-solutions.eu</url>
 	<description>
 		pain.001.001.03 and camt.053.001.02 conversion utilities
 	</description>
 	<organization>
 		<name>A2 Rešitve, d.o.o.</name>
-		<url>http://a2-solutions.eu/</url>
+		<url>https://a2-solutions.eu/</url>
 	</organization>
 	<issueManagement>
 		<url>https://github.com/averemee-si/si-sepa-iso20022/issues</url>
@@ -24,7 +24,7 @@
 	<licenses>
 		<license>
 			<name>Apache License</name>
-			<url>http://a2-solutions.eu/licenses/apache/LICENSE.txt</url>
+			<url>https://a2-solutions.eu/licenses/apache/LICENSE.txt</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
@@ -107,7 +107,7 @@
 							<goal>xjc</goal>
 						</goals>
 						<configuration>
-							<packageName>eu.solutions.a2.iso20022.camt053.v001_02</packageName>
+							<packageName>solutions.a2.iso20022.camt053.v001_02</packageName>
 							<sources>
 								<source>src/main/resources/xsd/camt.053.001.02.xsd</source>
 							</sources>
@@ -121,7 +121,7 @@
 							<goal>xjc</goal>
 						</goals>
 						<configuration>
-							<packageName>eu.solutions.a2.iso20022.pain001.v001_03</packageName>
+							<packageName>solutions.a2.iso20022.pain001.v001_03</packageName>
 							<sources>
 								<source>src/main/resources/xsd/pain.001.001.03.xsd</source>
 							</sources>
@@ -170,7 +170,7 @@
 						</descriptors>
 						<archive>
 							<manifest>
-								<mainClass>eu.solutions.a2.iso20022.si.revolut.SepaUtils</mainClass>
+								<mainClass>solutions.a2.iso20022.si.revolut.SepaUtils</mainClass>
 							</manifest>
 						</archive>
 					</configuration>

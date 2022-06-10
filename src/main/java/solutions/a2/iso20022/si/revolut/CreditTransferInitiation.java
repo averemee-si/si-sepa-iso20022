@@ -11,7 +11,7 @@
  * the License for the specific language governing permissions and limitations under the License.
  */
 
-package eu.solutions.a2.iso20022.si.revolut;
+package solutions.a2.iso20022.si.revolut;
 
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -31,18 +31,18 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.lang3.StringUtils;
 
-import eu.solutions.a2.iso20022.pain001.v001_03.CreditTransferTransactionInformation10;
-import eu.solutions.a2.iso20022.pain001.v001_03.CustomerCreditTransferInitiationV03;
-import eu.solutions.a2.iso20022.pain001.v001_03.Document;
-import eu.solutions.a2.iso20022.pain001.v001_03.PaymentInstructionInformation3;
-import eu.solutions.a2.iso20022.pain001.v001_03.StructuredRemittanceInformation7;
+import solutions.a2.iso20022.pain001.v001_03.CreditTransferTransactionInformation10;
+import solutions.a2.iso20022.pain001.v001_03.CustomerCreditTransferInitiationV03;
+import solutions.a2.iso20022.pain001.v001_03.Document;
+import solutions.a2.iso20022.pain001.v001_03.PaymentInstructionInformation3;
+import solutions.a2.iso20022.pain001.v001_03.StructuredRemittanceInformation7;
 
 public class CreditTransferInitiation {
 
 	private final CustomerCreditTransferInitiationV03 ccti;
 
 	public CreditTransferInitiation(final String fileName) throws IOException, JAXBException {
-		final JAXBContext jaxbContext = JAXBContext.newInstance("eu.solutions.a2.iso20022.pain001.v001_03");
+		final JAXBContext jaxbContext = JAXBContext.newInstance("solutions.a2.iso20022.pain001.v001_03");
 		final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 		final Source source = new StreamSource(new FileInputStream(fileName));
 		final JAXBElement<Document> jaxbElement = unmarshaller.unmarshal(source, Document.class);
