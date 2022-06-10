@@ -73,7 +73,16 @@ public class SepaUtils {
 		Screen screen = null;
 		try {
 			// Setup terminal and screen layers
-			final Terminal terminal = new DefaultTerminalFactory().createTerminal();
+			final Terminal terminal;
+			final String os = System.getProperty("os.name");
+			LOGGER.info("Running on {}", os);
+			if (StringUtils.containsIgnoreCase(os, "Windows")) {
+				DefaultTerminalFactory dtf = new DefaultTerminalFactory();
+				dtf.setForceAWTOverSwing(true);
+				terminal = dtf.createTerminal();
+			} else {
+				terminal = new DefaultTerminalFactory().createTerminal();
+			}
 			screen = new TerminalScreen(terminal);
 			screen.startScreen();
 		
